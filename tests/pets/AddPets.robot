@@ -48,7 +48,7 @@ Should not be able to add a new pet without name
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${responseDict}    code
-    Should Be Equal As Numbers    ${responseDict}[id]    ${405}
+    Should Be Equal As Numbers    ${responseDict}[code]    ${405}
     Dictionary Should Contain Key    ${responseDict}    type
     Dictionary Should Contain Key    ${responseDict}    message
 
@@ -62,7 +62,7 @@ Should not be able to add a new pet with non-string name
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${responseDict}    code
-    Should Be Equal As Numbers    ${responseDict}[id]    ${405}
+    Should Be Equal As Numbers    ${responseDict}[code]    ${405}
     Dictionary Should Contain Key    ${responseDict}    type
     Dictionary Should Contain Key    ${responseDict}    message
 
@@ -75,7 +75,7 @@ Should not be able to add a new pet without photo URLs
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${responseDict}    code
-    Should Be Equal As Numbers    ${responseDict}[id]    ${405}
+    Should Be Equal As Numbers    ${responseDict}[code]    ${405}
     Dictionary Should Contain Key    ${responseDict}    type
     Dictionary Should Contain Key    ${responseDict}    message
 
@@ -89,7 +89,7 @@ Should not be able to add a new pet with non-string list photo URLs
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${responseDict}    code
-    Should Be Equal As Numbers    ${responseDict}[id]    ${405}
+    Should Be Equal As Numbers    ${responseDict}[code]    ${405}
     Dictionary Should Contain Key    ${responseDict}    type
     Dictionary Should Contain Key    ${responseDict}    message
 
@@ -102,6 +102,6 @@ Should not be able to add a new pet with invalid status
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
     Dictionary Should Contain Key    ${responseDict}    code
-    Should Be Equal As Numbers    ${responseDict}[id]    ${405}
+    Should Be Equal As Numbers    ${responseDict}[code]    ${405}
     Dictionary Should Contain Key    ${responseDict}    type
     Dictionary Should Contain Key    ${responseDict}    message
