@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<robot generator="Robot 7.3.2 (Python 3.12.2 on darwin)" generated="2025-10-01T09:04:43.643386" rpa="false" schemaversion="5">
+<suite id="s1" name="Petcircle-Demo" source="/Users/vernonraineilcenzon/Documents/petcircle-demo">
+<suite id="s1-s1" name="Tests" source="/Users/vernonraineilcenzon/Documents/petcircle-demo/tests">
+<suite id="s1-s1-s1" name="Pets" source="/Users/vernonraineilcenzon/Documents/petcircle-demo/tests/pets">
+<suite id="s1-s1-s1-s1" name="AddPets" source="/Users/vernonraineilcenzon/Documents/petcircle-demo/tests/pets/AddPets.robot">
+<kw name="Create Session" owner="RequestsLibrary" type="SETUP">
+<msg time="2025-10-01T09:04:43.727503" level="INFO">Creating Session using : alias=petstoresession, url=https://petstore.swagger.io/v2, headers={},                     cookies={}, auth=None, timeout=None, proxies=None, verify=True,                     debug=0 </msg>
+<arg>petstoresession</arg>
+<arg>https://petstore.swagger.io/v2</arg>
+<arg>verify=${True}</arg>
+<doc>Create Session: create a HTTP session to a server</doc>
+<status status="PASS" start="2025-10-01T09:04:43.727285" elapsed="0.000362"/>
+</kw>
+<test id="s1-s1-s1-s1-t1" name="Should not be able to add a new pet with invalid status" line="96">
+<kw name="Create List" owner="BuiltIn">
+<msg time="2025-10-01T09:04:43.729920" level="INFO">@{photoUrls} = [ string ]</msg>
+<var>@{photoUrls}</var>
+<arg>string</arg>
+<doc>Returns a list containing given items.</doc>
+<status status="PASS" start="2025-10-01T09:04:43.729761" elapsed="0.000261"/>
+</kw>
+<kw name="Create Dictionary" owner="BuiltIn">
+<msg time="2025-10-01T09:04:43.730496" level="INFO">&amp;{data} = { name=doggie | photoUrls=['string'] | status=invalid }</msg>
+<var>&amp;{data}</var>
+<arg>name=doggie</arg>
+<arg>photoUrls=${photoUrls}</arg>
+<arg>status=invalid</arg>
+<doc>Creates and returns a dictionary based on the given ``items``.</doc>
+<status status="PASS" start="2025-10-01T09:04:43.730190" elapsed="0.000360"/>
+</kw>
+<kw name="POST On Session" owner="RequestsLibrary">
+<msg time="2025-10-01T09:04:44.808002" level="INFO">POST Request : url=https://petstore.swagger.io/v2/pet 
+ path_url=/v2/pet 
+ headers={'User-Agent': 'python-requests/2.32.5', 'Accept-Encoding': 'gzip, deflate', 'Accept': '*/*', 'Connection': 'keep-alive', 'Content-Length': '64', 'Content-Type': 'application/json'} 
+ body=b'{"name": "doggie", "photoUrls": ["string"], "status": "invalid"}' 
+ </msg>
+<msg time="2025-10-01T09:04:44.808198" level="INFO">POST Response : url=https://petstore.swagger.io/v2/pet 
+ status=200, reason=OK 
+ headers={'Date': 'Wed, 01 Oct 2025 01:04:44 GMT', 'Content-Type': 'application/json', 'Transfer-Encoding': 'chunked', 'Connection': 'keep-alive', 'Access-Control-Allow-Origin': '*', 'Access-Control-Allow-Methods': 'GET, POST, DELETE, PUT', 'Access-Control-Allow-Headers': 'Content-Type, api_key, Authorization', 'Server': 'Jetty(9.2.9.v20150224)'} 
+ body={"id":9223372036854775807,"name":"doggie","photoUrls":["string"],"tags":[],"status":"invalid"} 
+ </msg>
+<msg time="2025-10-01T09:04:44.808357" level="INFO">${response} = &lt;Response [200]&gt;</msg>
+<var>${response}</var>
+<arg>petstoresession</arg>
+<arg>/pet</arg>
+<arg>json=${data}</arg>
+<arg>expected_status=any</arg>
+<doc>Sends a POST request on a previously created HTTP Session.</doc>
+<status status="PASS" start="2025-10-01T09:04:43.730703" elapsed="1.077714"/>
+</kw>
+<kw name="Status Should Be" owner="RequestsLibrary">
+<msg time="2025-10-01T09:04:44.809238" level="FAIL">Url: https://petstore.swagger.io/v2/pet Expected status: 200 != 405</msg>
+<arg>405</arg>
+<arg>${response}</arg>
+<doc>Fails if response status code is different than the expected.</doc>
+<status status="FAIL" start="2025-10-01T09:04:44.808770" elapsed="0.011705">Url: https://petstore.swagger.io/v2/pet Expected status: 200 != 405</status>
+</kw>
+<kw name="Set Variable" owner="BuiltIn">
+<var>&amp;{responseDict}</var>
+<arg>${response.json()}</arg>
+<doc>Returns the given values which can then be assigned to a variables.</doc>
+<status status="NOT RUN" start="2025-10-01T09:04:44.820713" elapsed="0.000093"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${responseDict}</arg>
+<arg>code</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="NOT RUN" start="2025-10-01T09:04:44.820927" elapsed="0.000063"/>
+</kw>
+<kw name="Should Be Equal As Numbers" owner="BuiltIn">
+<arg>${responseDict}[code]</arg>
+<arg>${405}</arg>
+<doc>Fails if objects are unequal after converting them to real numbers.</doc>
+<status status="NOT RUN" start="2025-10-01T09:04:44.821091" elapsed="0.000054"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${responseDict}</arg>
+<arg>type</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="NOT RUN" start="2025-10-01T09:04:44.821232" elapsed="0.000046"/>
+</kw>
+<kw name="Dictionary Should Contain Key" owner="Collections">
+<arg>${responseDict}</arg>
+<arg>message</arg>
+<doc>Fails if ``key`` is not found from ``dictionary``.</doc>
+<status status="NOT RUN" start="2025-10-01T09:04:44.821359" elapsed="0.000044"/>
+</kw>
+<status status="FAIL" start="2025-10-01T09:04:43.727747" elapsed="1.093838">Url: https://petstore.swagger.io/v2/pet Expected status: 200 != 405</status>
+</test>
+<status status="FAIL" start="2025-10-01T09:04:43.676588" elapsed="1.150365"/>
+</suite>
+<status status="FAIL" start="2025-10-01T09:04:43.675056" elapsed="1.155410"/>
+</suite>
+<status status="FAIL" start="2025-10-01T09:04:43.672058" elapsed="1.160590"/>
+</suite>
+<status status="FAIL" start="2025-10-01T09:04:43.651110" elapsed="1.182988"/>
+</suite>
+<statistics>
+<total>
+<stat pass="0" fail="1" skip="0">All Tests</stat>
+</total>
+<tag>
+</tag>
+<suite>
+<stat name="Petcircle-Demo" id="s1" pass="0" fail="1" skip="0">Petcircle-Demo</stat>
+<stat name="Tests" id="s1-s1" pass="0" fail="1" skip="0">Petcircle-Demo.Tests</stat>
+<stat name="Pets" id="s1-s1-s1" pass="0" fail="1" skip="0">Petcircle-Demo.Tests.Pets</stat>
+<stat name="AddPets" id="s1-s1-s1-s1" pass="0" fail="1" skip="0">Petcircle-Demo.Tests.Pets.AddPets</stat>
+</suite>
+</statistics>
+<errors>
+</errors>
+</robot>

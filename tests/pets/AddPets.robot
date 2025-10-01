@@ -43,7 +43,7 @@ Should not be able to add a new pet without name
     @{photoUrls}=    Create List    string
     &{data}=    Create Dictionary    photoUrls=${photoUrls}
 
-    ${response}=    POST On Session    petstoresession    /pet    json=${data}
+    ${response}=    POST On Session    petstoresession    /pet    json=${data}     expected_status=any
 
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
@@ -57,7 +57,7 @@ Should not be able to add a new pet with non-string name
     @{photoUrls}=    Create List    string
     &{data}=    Create Dictionary    name=${1}    photoUrls=${photoUrls}
 
-    ${response}=    POST On Session    petstoresession    /pet    json=${data}
+    ${response}=    POST On Session    petstoresession    /pet    json=${data}     expected_status=any
 
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
@@ -70,7 +70,7 @@ Should not be able to add a new pet with non-string name
 Should not be able to add a new pet without photo URLs
     &{data}=    Create Dictionary    name=doggie
 
-    ${response}=    POST On Session    petstoresession    /pet    json=${data}
+    ${response}=    POST On Session    petstoresession    /pet    json=${data}     expected_status=any
 
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
@@ -84,7 +84,7 @@ Should not be able to add a new pet with non-string list photo URLs
     @{photoUrls}=    Create List    ${1}
     &{data}=    Create Dictionary    name=doggie    photoUrls=${photoUrls}
 
-    ${response}=    POST On Session    petstoresession    /pet    json=${data}
+    ${response}=    POST On Session    petstoresession    /pet    json=${data}     expected_status=any
 
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
@@ -93,11 +93,12 @@ Should not be able to add a new pet with non-string list photo URLs
     Dictionary Should Contain Key    ${responseDict}    type
     Dictionary Should Contain Key    ${responseDict}    message
 
+# This test currently fails because the endpoint still returns 200, contrary to what the API spec says that `status` should be one of the defined enum values.
 Should not be able to add a new pet with invalid status
     @{photoUrls}=    Create List    string
     &{data}=    Create Dictionary    name=doggie    photoUrls=${photoUrls}    status=invalid
 
-    ${response}=    POST On Session    petstoresession    /pet    json=${data}
+    ${response}=    POST On Session    petstoresession    /pet    json=${data}     expected_status=any
 
     Status Should Be    405    ${response}
     &{responseDict}=    Set Variable    ${response.json()}
