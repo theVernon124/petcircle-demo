@@ -4,9 +4,10 @@ Add more scenarios to validate other fields like category, tags
 *** Settings ***
 Library    Collections
 Library    RequestsLibrary
+Resource    ../../keywords/pets/Pets.resource
 
 Suite Setup    Create Session    petstoresession    https://petstore.swagger.io/v2    verify=${True}
-Test Setup    Add Pet
+Test Setup    Add Pet    petstoresession
 
 *** Test Cases ***
 Should be able to find existing pet by ID
@@ -36,12 +37,3 @@ Should not be able to find pet with non-existent ID
     Dictionary Should Contain Item    ${responseDict}    code    ${1}
     Dictionary Should Contain Item    ${responseDict}    type    error
     Dictionary Should Contain Item    ${responseDict}    message    Pet not found
-
-*** Keywords ***
-Add Pet
-    @{photoUrls}=    Create List    string
-    &{data}=    Create Dictionary    name=doggie    photoUrls=${photoUrls}
-    Set Test Variable    ${data}
-
-    ${response}=    POST On Session    petstoresession    /pet    json=${data}
-    Set Test Variable    ${petId}    ${response.json()}[id]

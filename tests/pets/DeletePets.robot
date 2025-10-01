@@ -4,9 +4,10 @@ Add more scenarios to validate other fields like category, tags
 *** Settings ***
 Library    Collections
 Library    RequestsLibrary
+Resource    ../../keywords/pets/Pets.resource
 
 Suite Setup    Create Session    petstoresession    https://petstore.swagger.io/v2    verify=${True}
-Test Setup    Add Pet
+Test Setup    Add Pet    petstoresession
 
 *** Test Cases ***
 Should be able to delete existing pet
@@ -41,12 +42,3 @@ Should not be able to delete pet with non-string ID
     Dictionary Should Contain Key    ${responseDict}    code
     Dictionary Should Contain Key    ${responseDict}    type
     Dictionary Should Contain Key    ${responseDict}    message
-
-*** Keywords ***
-Add Pet
-    @{photoUrls}=    Create List    string
-    &{data}=    Create Dictionary    name=doggie    photoUrls=${photoUrls}
-    Set Test Variable    ${data}
-
-    ${response}=    POST On Session    petstoresession    /pet    json=${data}
-    Set Test Variable    ${petId}    ${response.json()}[id]
