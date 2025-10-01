@@ -1,6 +1,3 @@
-*** Comments ***
-Add more scenarios to validate other fields like category, tags
-
 *** Settings ***
 Library    Collections
 Library    RequestsLibrary
