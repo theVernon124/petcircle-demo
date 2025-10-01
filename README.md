@@ -53,9 +53,16 @@ This project is my submission for Pet Circle's technical challenge for the QA an
 
 The project includes a GitHub Actions workflow (`.github/workflows/robot.yaml`) that automatically runs the tests on every push to the `main` branch. The workflow also attempts to rerun failed tests and merges the results. Test reports are uploaded as artifacts.
 
+## Notes/Observations During Testing
+
+- Some fields don't seem to have the expected validations based on the API spec.
+- The `PUT` and `DELETE` endpoints don't seem to update/delete the resources as expected.
+- The response body for some 4xx responses don't seem to have descriptive error messages or content. Some error messages even expose the underlying tech stack/architecture.
+- Repeatedly sending the same request for some endpoints (e.g., `GET`) seems to produce different response bodies every time.
+
 ## Ideas for Improvement
 
-- Add more comprehensive test cases for each endpoint, covering all fields (e.g., `category`, `tags`) and various valid/invalid data combinations and field validations.
+- Add more comprehensive test cases for each endpoint, covering all fields (e.g., `category`, `tags`) and various valid/invalid data combinations and field validations, as well as validations for expected HTTP methods and headers.
 - Add tests for other API endpoints (e.g., `store`, `user`).
 - Define other common setup/teardown, user flow, and assertion logic as reusable keywords.
 - Explore using data-driven/test template approach for scenarios with many input variations.
